@@ -10,22 +10,22 @@ NETBIRD_INSTALL="https://raw.githubusercontent.com/Quok-it/netbirdDaemonized/ref
 
 #uninstall netbird
 
-curl -fSsSL $NETBIRD_UNINSTALL | bash
+curl -fsSL $NETBIRD_UNINSTALL | bash
 
 #uninstall nomad
 
 
-curl -fSsSL $NOMAD_UNINSTALL | bash
+curl -fsSL $NOMAD_UNINSTALL | bash
 
 
 #install netbird
 
-curl -fSsSL $NETBIRD_INSTALL | bash -s -- $CLIENT_TOKEN
+curl -fsSL $NETBIRD_INSTALL | bash -s -- $CLIENT_TOKEN
 
 
 #install nomad
 
-curl -fSsSL $NOMAD_INSTALL | bash -s -- $SERVER_IP
+curl -fsSL $NOMAD_INSTALL | bash -s -- $SERVER_IP
 
 #on success, welcome to the bush
 

@@ -1,3 +1,5 @@
+set -e
+
 SERVER_IP="$1"
 CLIENT_TOKEN="$2"
 

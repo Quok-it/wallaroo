@@ -1,5 +1,3 @@
-set -e
-
 SERVER_IP="$1"
 CLIENT_TOKEN="$2"
 
@@ -12,21 +10,24 @@ NETBIRD_INSTALL="https://raw.githubusercontent.com/Quok-it/netbirdDaemonized/ref
 
 #uninstall netbird
 
+echo "uninstalling netbird"
 curl -fsSL $NETBIRD_UNINSTALL | bash
 
 #uninstall nomad
 
-
+echo "uninstalling nomad"
 curl -fsSL $NOMAD_UNINSTALL | bash
 
 
 #install netbird
 
+echo "installing netbird"
 curl -fsSL $NETBIRD_INSTALL | bash -s -- $CLIENT_TOKEN
 
 
 #install nomad
 
+echo "installing nomad"
 curl -fsSL $NOMAD_INSTALL | bash -s -- $SERVER_IP
 
 #on success, welcome to the bush

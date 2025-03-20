@@ -8,29 +8,44 @@ NETBIRD_INSTALL="https://raw.githubusercontent.com/Quok-it/netbirdDaemonized/ref
 
 #uninstall first, install after. Ensure perfection
 
-#uninstall netbird
+download_and_run() {
+  local url="$1"
+  shift
+  local params="$@"
+  local temp_script
+  temp_script=$(mktemp) || { echo "Failed to create temporary file."; exit 1; }
 
-echo "uninstalling netbird"
-curl -fsSL $NETBIRD_UNINSTALL | bash
+  # Download the script
+  if ! curl -fsSL "$url" -o "$temp_script"; then
+    echo "Error: Failed to download script from $url" >&2
+    rm -f "$temp_script"
+    exit 1
+  fi
 
-#uninstall nomad
+  # Execute the script
+  bash "$temp_script" $params
 
-echo "uninstalling nomad"
-curl -fsSL $NOMAD_UNINSTALL | bash
+  # Clean up
+  rm -f "$temp_script"
+}
 
+# Uninstall netbird
+echo "Uninstalling netbird..."
+download_and_run "$NETBIRD_UNINSTALL"
 
-#install netbird
+# Uninstall nomad
+echo "Uninstalling nomad..."
+download_and_run "$NOMAD_UNINSTALL"
 
-echo "installing netbird"
-curl -fsSL $NETBIRD_INSTALL | bash -s -- $CLIENT_TOKEN
+# Install netbird
+echo "Installing netbird..."
+download_and_run "$NETBIRD_INSTALL" "$CLIENT_TOKEN"
 
+# Install nomad
+echo "Installing nomad..."
+download_and_run "$NOMAD_INSTALL" "$SERVER_IP"
 
-#install nomad
-
-echo "installing nomad"
-curl -fsSL $NOMAD_INSTALL | bash -s -- $SERVER_IP
-
-#on success, welcome to the bush
+# On success, welcome message
 
 echo "
                                                 .:=.
